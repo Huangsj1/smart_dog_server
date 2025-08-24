@@ -1,0 +1,138 @@
+# 模版配置文件，需要手动创建config.yaml并填入具体值
+
+# 系统角色：GPT-SoVITS中设置音色、system_role_prompt.yaml中加载角色系统提示词
+#system_role: "Squidward"
+system_role: "ai_assistant"
+llm_provider: "siliconflow"
+tts_remote: True
+#tts_provider: "gpt_sovits"
+tts_provider: "cosy_voice"
+#asr_remote: True
+asr_remote: False
+asr_provider: "sensevoice_small"
+
+
+config_paths:
+  whitelist_path: "my_mcp/tools_whitelist.yaml"
+  system_role_path: "chat_handler/system_role_prompt.yaml"
+
+
+llm:
+  deepseek:
+    api_key: "YOUR_DEEPSEEK_API_KEY"
+    model: "deepseek-chat"
+    base_url: "https://api.deepseek.com"
+    max_tokens: 4096
+    max_context_tokens: 64000
+  siliconflow:
+    api_key: "YOUR_SILICONFLOW_API_KEY"
+    model: "deepseek-ai/DeepSeek-V3"
+    base_url: "https://api.siliconflow.cn/v1"
+    # ds-v3最大是8192
+    max_tokens: 4096
+    max_context_tokens: 128000
+
+mcp_servers:
+  local:
+    transport: "stdio"
+    command: "python"
+    args: ["my_mcp/my_server/local_cal.py"]
+  amap-maps-streamableHTTP:
+    transport: "http"
+    url: "https://mcp.amap.com/mcp?key=YOUR_AMAP_API_KEY"
+
+tts:
+  cosy_voice:
+    api_key: "YOUR_SILICONFLOW_API_KEY"
+    model: "FunAudioLLM/CosyVoice2-0.5B"
+    base_url: "https://api.siliconflow.cn/v1"
+    voice: "FunAudioLLM/CosyVoice2-0.5B:claire"
+    response_format: "wav"
+  gpt_sovits:
+    # 本地
+    local:
+      base_url: "http://127.0.0.1:9880"
+      PaTrickStar:
+        gpt_model_path: "GPT_weights_v4/PatrickStar_0723_v4-e15.ckpt"
+        sovits_model_path: "SoVITS_weights_v4/PatrickStar_0723_v4_e10_s480_l32.pth"
+        version: "v4"
+        prompt_lang: "zh"
+        ref_audio_emotion:
+          normal:
+            ref_audio_path: "output/reference_opt/PaTrickStar/我想你会喜欢他的。不能最后用一次吗？.wav"
+            prompt_text: "我想你会喜欢他的。不能最后用一次吗？"
+            sample_steps: 8
+    # 远程
+    remote:
+      base_url: "YOUR_REMOTE_TTS_BASE_URL"  # 如: http://192.168.2.32:9880
+      SpongeBob:
+        gpt_model_path: "GPT_weights_v4/SpongeBob_0723-e15.ckpt"
+        sovits_model_path: "SoVITS_weights_v4/SpongeBob_0723_e10_s370_l32.pth"
+        version: "v4"
+        prompt_lang: "zh"
+        ref_audio_emotion:
+          normal:
+            ref_audio_path: "output/reference_opt/SpongeBob/哦章鱼哥，你觉得这样够深了吗？公主请上车。.wav"
+            prompt_text: "哦章鱼哥，你觉得这样够深了吗？公主请上车。"
+            sample_steps: 16
+          quiet:
+            ref_audio_path: "output/reference_opt/SpongeBob/派大星，蟹老板的墙壁上挂了好多好多珍贵的财宝。.wav"
+            prompt_text: "派大星，蟹老板的墙壁上挂了好多好多珍贵的财宝。"
+            sample_steps: 16
+      PaTrickStar:
+        gpt_model_path: "GPT_weights_v4/PatrickStar_0723_v4-e15.ckpt"
+        sovits_model_path: "SoVITS_weights_v4/PatrickStar_0723_v4_e10_s480_l32.pth"
+        version: "v4"
+        prompt_lang: "zh"
+        ref_audio_emotion:
+          normal:
+            ref_audio_path: "output/reference_opt/PaTrickStar/我想你会喜欢他的。不能最后用一次吗？.wav"
+            prompt_text: "我想你会喜欢他的。不能最后用一次吗？"
+            sample_steps: 8
+          angry:
+            ref_audio_path: "output/reference_opt/PaTrickStar/蟹老板见鬼去吧！任何油漆都一定会被什么东西洗掉的。.wav"
+            prompt_text: "蟹老板见鬼去吧！任何油漆都一定会被什么东西洗掉的。"
+            sample_steps: 8
+      Squidward:
+        gpt_model_path: "GPT_weights_v4/Squidward_0723_v4-e15.ckpt"
+        sovits_model_path: "SoVITS_weights_v4/Squidward_0723_v4_e10_s490_l32.pth"
+        version: "v4"
+        prompt_lang: "zh"
+        ref_audio_emotion:
+          normal:
+            ref_audio_path: "output/reference_opt/Squidward/啊！我做梦都想有这么一天，章鱼先生，艺术学教授！.wav"
+            prompt_text: "啊！我做梦都想有这么一天，章鱼先生，艺术学教授！"
+            sample_steps: 8
+          happy:
+            ref_audio_path: "output/reference_opt/Squidward/艺术不是游戏，这是一项，艰苦的工作！.wav"
+            prompt_text: "艺术不是游戏，这是一项，艰苦的工作！"
+            sample_steps: 8
+      MrKrabs:
+        gpt_model_path: "GPT_weights_v4/MrKrabs_0723_v4-e15.ckpt"
+        sovits_model_path: "SoVITS_weights_v4/MrKrabs_0723_v4_e10_s420_l32.pth"
+        version: "v4"
+        prompt_lang: "zh"
+        ref_audio_emotion:
+          normal:
+            ref_audio_path: "output/reference_opt/MrKrabs/对不起，你们把我的东西都擦得一尘不染，这太好了。.wav"
+            prompt_text: "对不起，你们把我的东西都擦得一尘不染，这太好了。"
+            sample_steps: 32
+          quiet:
+            ref_audio_path: "output/reference_opt/MrKrabs/那个墙壁上的花纹，是自己油漆好的？我要把这称为奇迹。.wav"
+            prompt_text: "那个墙壁上的花纹，是自己油漆好的？我要把这称为奇迹。"
+            sample_steps: 16
+          fast:
+            ref_audio_path: "output/reference_opt/MrKrabs/现在好好工作吧。你们俩好像在隐藏着什么肮脏的小秘密。.wav"
+            prompt_text: "现在好好工作吧。你们俩好像在隐藏着什么肮脏的小秘密。"
+            sample_steps: 8
+
+
+asr:
+  local:
+    sensevoice_small:
+      base_url: "http://127.0.0.1:9999/"
+  remote:
+    sensevoice_small:
+      api_key: "YOUR_SILICONFLOW_API_KEY"
+      base_url: "https://api.siliconflow.cn/v1/audio/transcriptions"
+      model: "FunAudioLLM/SenseVoiceSmall"
